@@ -9,7 +9,7 @@
 code file name
 
 ```
-P${question.frontendQuestionId}$!velocityTool.camelCaseName(${question.titleSlug})
+$!velocityTool.camelCaseName(${question.titleSlug})
 ```
 
 codeTemplate
@@ -17,10 +17,14 @@ codeTemplate
 ```
 ${question.content}
 package leetcode.editor.cn;
-//java:${question.title}
-public class P${question.frontendQuestionId}$!velocityTool.camelCaseName(${question.titleSlug}){
+
+/**
+ * title: ${question.frontendQuestionId} : ${question.title}
+ * create: $!velocityTool.date()
+ */
+public class $!velocityTool.camelCaseName(${question.titleSlug}){
     public static void main(String[] args){
-        Solution solution = new P${question.frontendQuestionId}$!velocityTool.camelCaseName(${question.titleSlug})().new Solution();
+        Solution solution = new $!velocityTool.camelCaseName(${question.titleSlug})().new Solution();
     }
     ${question.code}
 }
