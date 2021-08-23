@@ -103,8 +103,10 @@ public class Heap {
     }
 
     public static void main(String[] args) {
-        System.out.println(1 >> 1);
-        System.out.println(0 >> 1);
-        System.out.println(2 >> 1);
+        // 7、8、9、10
+        // 11、12、1、2、3、4、5、6、7
+        int a = 4*19000+8*21000;
+        System.out.println(a);
+        System.out.println(a/12);
     }
 }
