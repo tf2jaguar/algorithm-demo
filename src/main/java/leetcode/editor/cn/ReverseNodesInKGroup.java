@@ -100,7 +100,7 @@ public class ReverseNodesInKGroup {
                     idx = 1;
                 }
             }
-
+return null;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

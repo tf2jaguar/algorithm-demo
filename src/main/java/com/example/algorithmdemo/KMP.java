@@ -3,7 +3,8 @@ package com.example.algorithmdemo;
 /**
  * @author ：guodongzhang
  * @date ：Created in 2021/8/24 17:19
- */public class KMP {
+ */
+public class KMP {
 
     /**
      * 获取KMP算法中pattern字符串对应的next数组
@@ -15,15 +16,39 @@ package com.example.algorithmdemo;
         int[] next = new int[len];
 
         int l = -1;
-        int r = 0;
+        // 当前待求next的位置
+        int i = 0;
         next[0] = -1;
-        while (r < len - 1) {
-            if (l == -1 || chars[r] == chars[l]) {
+        while (i < len - 1) {
+            if (l == -1 || chars[i] == chars[l]) {
                 l++;
-                r++;
-                next[r] = l;
+                i++;
+                next[i] = l;
             } else {
                 l = next[l];
+            }
+        }
+        return next;
+    }
+
+    public int[] getNext2(char[] chars) {
+        if (chars.length == 1) {
+            return new int[]{-1};
+        }
+        int[] next = new int[chars.length];
+        next[0] = -1;
+        next[1] = 0;
+        // 当前待求next的位置
+        int i = 2;
+        // 上一个位置的next数组的值
+        int lastNextVal = 0;
+        while (i < chars.length) {
+            if (chars[i - 1] == chars[lastNextVal]) {
+                next[i++] = ++lastNextVal;
+            } else if (lastNextVal > 0) {
+                lastNextVal = next[lastNextVal];
+            } else {
+                next[i++] = 0;
             }
         }
         return next;
@@ -35,6 +60,7 @@ package com.example.algorithmdemo;
         int sLen = sChar.length;
         int pLen = pChar.length;
         int[] next = getNext(pChar);
+        int[] next1 = getNext2(pChar);
 
         int i = 0, j = 0;
         while (i < sLen && j < pLen) {
