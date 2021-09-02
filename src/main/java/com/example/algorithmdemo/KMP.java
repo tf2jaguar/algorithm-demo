@@ -12,26 +12,6 @@ public class KMP {
      * @param chars 模式字符串对应的字符数组
      */
     public int[] getNext(char[] chars) {
-        final int len = chars.length;
-        int[] next = new int[len];
-
-        int l = -1;
-        // 当前待求next的位置
-        int i = 0;
-        next[0] = -1;
-        while (i < len - 1) {
-            if (l == -1 || chars[i] == chars[l]) {
-                l++;
-                i++;
-                next[i] = l;
-            } else {
-                l = next[l];
-            }
-        }
-        return next;
-    }
-
-    public int[] getNext2(char[] chars) {
         if (chars.length == 1) {
             return new int[]{-1};
         }
@@ -43,9 +23,12 @@ public class KMP {
         // 上一个位置的next数组的值
         int lastNextVal = 0;
         while (i < chars.length) {
+            // 当前待求next值位置的前一个位置的值，和该位置对应的next数组的值的位置是否相等
+            // 相等则直接将该位置对应的next数组的值 加一，即为当前位置的next数组的值
             if (chars[i - 1] == chars[lastNextVal]) {
                 next[i++] = ++lastNextVal;
             } else if (lastNextVal > 0) {
+                // 两个值不想等，如果上一个位置的next数组的值不为-1，则向前跳到next值的位置
                 lastNextVal = next[lastNextVal];
             } else {
                 next[i++] = 0;
@@ -60,24 +43,23 @@ public class KMP {
         int sLen = sChar.length;
         int pLen = pChar.length;
         int[] next = getNext(pChar);
-        int[] next1 = getNext2(pChar);
 
         int i = 0, j = 0;
         while (i < sLen && j < pLen) {
-            // 如果j = -1,或者当前字符匹配成功(src[i] = ptn[j]),都让i++,j++
-            if (j == -1 || sChar[i] == pChar[j]) {
+            // 如果当前字符匹配成功(src[i] = ptn[j]),都让i++,j++
+            if (sChar[i] == pChar[j]) {
                 i++;
                 j++;
+            } else if (next[j] == -1) {
+                // 如果pattern模式串的 next 数组的值为 -1 那么，pattern模式串已经到了最开头，无法再往前跳了。将源串位置加一
+                i++;
             } else {
-                // 如果j!=-1且当前字符匹配失败,则令i不变,j=next[j],即让pattern模式串右移j-next[j]个单位
+                // j=next[j],即让pattern模式串右移j-next[j]个单位
                 j = next[j];
             }
         }
-        if (j == pLen) {
-            return i - j;
-        }
 
-        return -1;
+        return j == pLen ? i - j : -1;
     }
 
 
