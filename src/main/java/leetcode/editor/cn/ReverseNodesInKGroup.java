@@ -57,9 +57,6 @@
 
 package leetcode.editor.cn;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * title: 25 : K 个一组翻转链表
  * create: 2021-08-31 16:38:22
@@ -67,6 +64,8 @@ import java.util.List;
 public class ReverseNodesInKGroup {
     public static void main(String[] args) {
         Solution solution = new ReverseNodesInKGroup().new Solution();
+        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        solution.reverseKGroup(head, 2);
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -81,26 +80,56 @@ public class ReverseNodesInKGroup {
      * }
      */
     class Solution {
-        public ListNode reverseKGroup(ListNode head, int k) {
-            List<ListNode> tmpList = new LinkedList<>();
-            ListNode dummy = new ListNode();
-            ListNode tail = dummy;
-            ListNode lastOne = dummy.next;
-            ListNode cur = head;
-            int idx = 1;
-            while (idx <= k && cur != null) {
-                tail.next = cur;
-                tail = cur;
-                cur = cur.next;
 
-                if (idx == k) {
-                    lastOne = dummy.next;
-                    tmpList.add(dummy.next);
-                    dummy = new ListNode();
-                    idx = 1;
+        public ListNode reverseKGroup(ListNode head, int k) {
+            // 记录最终的头节点
+            ListNode dummy = new ListNode();
+            // 记录临时结果列表，每次翻转后需要更新这个位置
+            ListNode dTmp = dummy;
+
+            // 记录当前是第 k 组中的头节点 和 第k组中的当前位置。
+            ListNode curHead = head;
+            ListNode curTmp = curHead;
+
+            int i = 1;
+            for (; i <= k && curTmp != null; i++) {
+                // i==k 每k个一组，这一组需要翻转。
+                // 记录其下一个位置，然后将翻转后的链表追加到临时结果链表 dTmp 中
+                // 更新下一组的各起始节点位置
+                if (i == k) {
+                    ListNode tmpNext = curTmp.next;
+                    curTmp.next = null;
+
+                    dTmp.next = reverse(curHead);
+                    dTmp = curHead;
+
+                    curHead = tmpNext;
+                    curTmp = curHead;
+                    i = 0;
+                } else {
+                    curTmp = curTmp.next;
                 }
             }
-return null;
+
+            // 如果 上述的 i 不为0，则存在尾节点个数不够 k 个，直接将最后一组追加到 临时结果链表即可
+            if (i != 0) {
+                dTmp.next = curHead;
+            }
+            return dummy.next;
+        }
+
+        /**
+         * 头插法，翻转链表
+         */
+        public ListNode reverse(ListNode node) {
+            ListNode dummy = new ListNode();
+            while (node != null) {
+                ListNode tmp = node.next;
+                node.next = dummy.next;
+                dummy.next = node;
+                node = tmp;
+            }
+            return dummy.next;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
