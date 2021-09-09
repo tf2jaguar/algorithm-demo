@@ -69,7 +69,7 @@ public class ReorderList {
             ListNode reverseListNode = reverseNode(s);
 
             // 合并两段
-           head = mergeNode(f, reverseListNode);
+            mergeNode(f, reverseListNode);
         }
 
         public ListNode findMiddleNode(ListNode head) {
@@ -92,26 +92,17 @@ public class ReorderList {
             return dummy.next;
         }
 
-        public ListNode mergeNode(ListNode a, ListNode b){
-            ListNode dummy = new ListNode();
-            ListNode cur = dummy;
-            while (a!=null&& b!=null){
-                cur.next = a;
-                cur.next.next = b;
+        public void mergeNode(ListNode a, ListNode b) {
+            while (a != null && b != null) {
+                ListNode aTmp = a.next;
+                ListNode bTmp = b.next;
 
-                a = a.next;
-                b = b.next;
-                cur = cur.next.next;
-            }
+                a.next = b;
+                b.next = aTmp;
 
-            if (a!=null){
-                cur.next = a;
+                a = aTmp;
+                b = bTmp;
             }
-            if (b!=null){
-                dummy.next = b;
-            }
-
-            return dummy.next;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
