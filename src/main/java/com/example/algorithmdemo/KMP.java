@@ -1,6 +1,8 @@
 package com.example.algorithmdemo;
 
 /**
+ * 解决原始问题：str1和str2为两个字符串，其中str1中的某个子串是否等于str2.
+ *
  * @author ：guodongzhang
  * @date ：Created in 2021/8/24 17:19
  */
