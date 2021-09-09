@@ -35,13 +35,13 @@
 // 0 <= Node.val <= 100 
 // 1 <= n <= sz 
 // 
-// Related Topics 链表 双指针 👍 1548 👎 0
+// Related Topics 链表 双指针 👍 1553 👎 0
 
 package leetcode.editor.cn;
 
 /**
  * title: 19 : 删除链表的倒数第 N 个结点
- * create: 2021-09-07 19:42:28
+ * create: 2021-09-09 08:39:52
  */
 public class RemoveNthNodeFromEndOfList {
     public static void main(String[] args) {

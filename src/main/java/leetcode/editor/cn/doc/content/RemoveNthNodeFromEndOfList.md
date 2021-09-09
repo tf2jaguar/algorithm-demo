@@ -35,4 +35,4 @@
 	<li><code>0 <= Node.val <= 100</code></li>
 	<li><code>1 <= n <= sz</code></li>
 </ul>
-<div><div>Related Topics</div><div><li>链表</li><li>双指针</li></div></div><br><div><li>👍 1548</li><li>👎 0</li></div>
+<div><div>Related Topics</div><div><li>链表</li><li>双指针</li></div></div><br><div><li>👍 1553</li><li>👎 0</li></div>
