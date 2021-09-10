@@ -59,9 +59,11 @@ public class ArithmeticSlices {
                 return res;
             }
 
+            // 记录前两个数的差值，通过不同大小的窗口(最小3)，的等差数的个数
             int lastSub = nums[1] - nums[0], curCount = 0;
             for (int i = 2; i < len; i++) {
                 int curSub = nums[i] - nums[i - 1];
+                // 窗口大小为 i，且数值等差
                 if (lastSub == curSub) {
                     curCount++;
                 } else {
