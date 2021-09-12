@@ -61,28 +61,26 @@ public class ImplementStrstr {
             if (needle == null || "".equals(needle)) {
                 return 0;
             }
-            char[] sChar = haystack.toCharArray();
-            char[] pChar = needle.toCharArray();
-            int sLen = sChar.length;
-            int pLen = pChar.length;
-            int[] next = getNext(pChar);
+            char[] hChars = haystack.toCharArray();
+            char[] nChars = needle.toCharArray();
+            int hLen = hChars.length;
+            int nLen = nChars.length;
+            int[] next = getNext(nChars);
 
             int i = 0, j = 0;
-            while (i < sLen && j < pLen) {
+            while (i < hLen && j < nLen) {
                 // 如果j = -1,或者当前字符匹配成功(src[i] = ptn[j]),都让i++,j++
-                if (j == -1 || sChar[i] == pChar[j]) {
+                if (hChars[i] == nChars[j]) {
                     i++;
                     j++;
+                } else if (next[j] == -1) {
+                    i++;
                 } else {
                     // 如果j!=-1且当前字符匹配失败,则令i不变,j=next[j],即让pattern模式串右移j-next[j]个单位
                     j = next[j];
                 }
             }
-            if (j == pLen) {
-                return i - j;
-            }
-
-            return -1;
+            return j == nLen ? i - j : -1;
         }
 
         /**
@@ -91,19 +89,22 @@ public class ImplementStrstr {
          * @param chars 模式字符串对应的字符数组
          */
         public int[] getNext(char[] chars) {
-            final int len = chars.length;
-            int[] next = new int[len];
+            if (chars == null || chars.length == 0) {
+                return new int[]{-1};
+            }
 
-            int l = -1;
-            int r = 0;
+            int[] next = new int[chars.length];
             next[0] = -1;
-            while (r < len - 1) {
-                if (l == -1 || chars[r] == chars[l]) {
-                    l++;
-                    r++;
-                    next[r] = l;
+            next[1] = 0;
+            int lastNextVal = 0;
+            int i = 2;
+            while (i < chars.length) {
+                if (chars[i - 1] == chars[lastNextVal]) {
+                    next[i++] = ++lastNextVal;
+                } else if (lastNextVal > 0) {
+                    lastNextVal = next[lastNextVal];
                 } else {
-                    l = next[l];
+                    next[i++] = 0;
                 }
             }
             return next;
