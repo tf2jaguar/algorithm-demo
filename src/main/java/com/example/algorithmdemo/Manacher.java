@@ -63,7 +63,7 @@ public class Manacher {
     }
 
     public static void main(String[] args) {
-        System.out.println(maxLcpsLength("1cc1abccbad"));
+        System.out.println(maxLcpsLength("abacdaa"));
     }
 
 
