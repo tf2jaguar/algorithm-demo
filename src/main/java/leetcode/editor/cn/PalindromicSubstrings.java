@@ -42,25 +42,62 @@ package leetcode.editor.cn;
 public class PalindromicSubstrings {
     public static void main(String[] args) {
         Solution solution = new PalindromicSubstrings().new Solution();
-        int abacdad = solution.countSubstrings("abacdad");
+        int abacdad = solution.countSubstrings("acadbcc");
+        // [#, a, #, c, #, a, #, d, #, b, #, c, #, c, #]
+        // [1, 2, 1, 4, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 1]
+
+        // [#, a, #, a, #, a, #]
+        // [1, 2, 3, 4, 3, 2, 1]
         System.out.println(abacdad);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public char[] manacherString(String str) {
-            char[] chars = str.toCharArray();
-            char[] res = new char[2 * chars.length + 1];
-            int j = 0;
-            for (int i = 0; i < res.length; i++) {
-                res[i] = (i & 1) == 0 ? '#' : chars[j++];
+            char[] strCharArray = str.toCharArray();
+            char[] res = new char[str.length() * 2 + 1];
+            int idx = 0;
+            for (int i = 0; i != res.length; i++) {
+                res[i] = (i & 1) == 0 ? '#' : strCharArray[idx++];
             }
             return res;
         }
 
-        public int countSubstrings(String s) {
+        /**
+         * 求字符串中最长回文子串的长度
+         */
+        public int[] manacher(String str) {
+            if (str == null || str.length() == 0) {
+                return new int[]{0};
+            }
 
-            return 0;
+            // 处理原始字符串
+            char[] strCharArr = manacherString(str);
+            // 回文半径数组
+            int[] rArr = new int[strCharArr.length];
+            // 回文中心点
+            int c = -1;
+            // 回文右边界
+            int r = -1;
+            // 求i位置的回文中心
+            for (int i = 0; i != strCharArr.length; i++) {
+                // r>i就是当前i在回文右边界内，pArr[2*c-i]代表i`的回文半径
+                rArr[i] = r > i ? Math.min(rArr[2 * c - i], r - i) : 1;
+
+                while (i + rArr[i] < strCharArr.length && i - rArr[i] > -1) {
+                    if (strCharArr[i + rArr[i]] == strCharArr[i - rArr[i]]) {
+                        rArr[i]++;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (i + rArr[i] > r) {
+                    r = i + rArr[i];
+                    c = i;
+                }
+            }
+            return rArr;
         }
 
         // 动态规划版
@@ -95,6 +132,16 @@ public class PalindromicSubstrings {
 
                     }
                 }
+            }
+            return res;
+        }
+
+        public int countSubstrings(String s) {
+            int[] manacher = manacher(s);
+
+            int res = 0;
+            for (int m : manacher) {
+                res += m / 2;
             }
             return res;
         }
