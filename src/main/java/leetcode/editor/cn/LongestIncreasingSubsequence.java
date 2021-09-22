@@ -69,7 +69,8 @@ public class LongestIncreasingSubsequence {
             if (len == 0) {
                 return 0;
             }
-            return LIS(nums, len);
+//            return LIS(nums, len);
+            return Lis(nums);
         }
 
         /**
