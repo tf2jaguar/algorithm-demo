@@ -40,7 +40,8 @@ public class MinPathSum {
         MinPathSum mps = new MinPathSum();
 //        int i = mps.minPathSum(new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}});
         int i = mps.minPathSum(new int[][]{{7, 4, 8, 7, 9, 3, 7, 5, 0}, {1, 8, 2, 2, 7, 1, 4, 5, 7}, {4, 6, 4, 7, 7, 4, 8, 2, 1}, {1, 9, 6, 9, 8, 2, 9, 7, 2}, {5, 5, 7, 5, 8, 7, 9, 1, 4}, {0, 7, 9, 9, 1, 5, 3, 9, 4}});
-        System.out.println(i);
+        int j = mps.minPathSum2(new int[][]{{7, 4, 8, 7, 9, 3, 7, 5, 0}, {1, 8, 2, 2, 7, 1, 4, 5, 7}, {4, 6, 4, 7, 7, 4, 8, 2, 1}, {1, 9, 6, 9, 8, 2, 9, 7, 2}, {5, 5, 7, 5, 8, 7, 9, 1, 4}, {0, 7, 9, 9, 1, 5, 3, 9, 4}});
+        System.out.println(i == j);
     }
 
     /**
@@ -80,5 +81,41 @@ public class MinPathSum {
             }
         }
         return dp[m - 1][n - 1];
+    }
+
+    /**
+     * 利用滚动数组
+     */
+    public int minPathSum2(int[][] grid) {
+        int m = grid.length;
+        if (m < 1) {
+            return 0;
+        }
+        int n = grid[0].length;
+        if (n < 1) {
+            return 0;
+        }
+        // 只开2行
+        // i % 2 在 0，1 之间滚动
+        int[][] dp = new int[2][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i % 2][j] = grid[i][j];
+                    continue;
+                }
+
+                int tmp = Integer.MAX_VALUE;
+                if (i > 0) {
+                    // i行的 上一行。 滚动时 1-i%2
+                    tmp = Math.min(tmp, dp[1 - i % 2][j]);
+                }
+                if (j > 0) {
+                    tmp = Math.min(tmp, dp[i % 2][j - 1]);
+                }
+                dp[i % 2][j] = tmp + grid[i][j];
+            }
+        }
+        return dp[(m - 1) % 2][n - 1];
     }
 }
