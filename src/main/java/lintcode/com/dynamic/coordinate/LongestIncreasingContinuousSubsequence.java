@@ -18,7 +18,7 @@
  * 挑战
  * 使用 O(n) 时间和 O(1) 额外空间来解决
  */
-package lintcode.com.coordinate;
+package lintcode.com.dynamic.coordinate;
 
 /**
  * 397 · 最长上升连续子序列

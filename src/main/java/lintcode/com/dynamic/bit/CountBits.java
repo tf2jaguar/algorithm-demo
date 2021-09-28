@@ -25,7 +25,7 @@
  * 2.空间复杂度应为 O(n).
  * 3.你能完成这项挑战吗? 不借助任何内嵌的函数, 比如C++ 中的 __builtin_popcount 亦或是任何其他语言中的方法
  */
-package lintcode.com.bit;
+package lintcode.com.dynamic.bit;
 
 /**
  * 664 Counting Bits

@@ -22,7 +22,7 @@
  * 输入: "10"
  * 输出: 1
  */
-package lintcode.com.partition;
+package lintcode.com.dynamic.partition;
 
 /**
  * 512 · 解码方法

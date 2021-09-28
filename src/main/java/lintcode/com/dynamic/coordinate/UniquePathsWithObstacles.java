@@ -38,7 +38,7 @@
  *
  * 只有 2 种不同的路径
  */
-package lintcode.com.coordinate;
+package lintcode.com.dynamic.coordinate;
 
 /**
  * @author zhangguodong

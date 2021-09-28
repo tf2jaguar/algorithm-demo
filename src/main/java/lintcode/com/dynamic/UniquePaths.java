@@ -44,7 +44,7 @@
  * RDRD
  * RDDR
  */
-package lintcode.com;
+package lintcode.com.dynamic;
 
 /**
  * 114 · 不同的路径
