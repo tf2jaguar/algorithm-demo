@@ -28,7 +28,7 @@
  * 解释:
  * P把炸弹放在 (0,0) 或 (0,3) 或 (2,0) 或 (2,3) 能杀2个敌人
  */
-package lintcode.com.coordinate;
+package lintcode.com.dynamic.coordinate;
 
 /**
  * 553 · 炸弹袭击

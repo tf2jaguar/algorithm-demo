@@ -17,7 +17,7 @@
  * 输入: [[1,2,3],[1,4,6]]
  * 输出: 3
  */
-package lintcode.com.sequence;
+package lintcode.com.dynamic.sequence;
 
 /**
  * 515 · 房屋染色

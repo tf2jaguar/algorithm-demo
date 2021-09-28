@@ -21,7 +21,7 @@
  * 3
  * 输出： -1
  */
-package lintcode.com;
+package lintcode.com.dynamic;
 
 
 /**

@@ -15,7 +15,7 @@
  * 输入:[-1,2,4,1]
  * 输出:8
  */
-package lintcode.com;
+package lintcode.com.dynamic;
 
 /**
  * 191 · 乘积最大子序列

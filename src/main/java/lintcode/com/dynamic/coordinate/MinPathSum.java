@@ -29,7 +29,7 @@
  *
  * 路线是： 1 -> 3 -> 2
  */
-package lintcode.com.coordinate;
+package lintcode.com.dynamic.coordinate;
 
 /**
  * @author zhangguodong
