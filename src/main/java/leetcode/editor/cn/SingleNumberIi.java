@@ -48,11 +48,12 @@ public class SingleNumberIi {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int singleNumber(int[] nums) {
-            Map<Integer, Integer> map = new HashMap<>(nums.length);
+            int a = 0, b = 0;
             for (int num : nums) {
-                map.put(num, map.getOrDefault(num, 0) + 1);
+                b = ~a & (b ^ num);
+                a = ~b & (a ^ num);
             }
-            return map.keySet().stream().filter(k -> map.get(k) == 1).findFirst().get();
+            return b;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
