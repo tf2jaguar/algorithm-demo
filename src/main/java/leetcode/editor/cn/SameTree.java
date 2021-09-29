@@ -64,21 +64,14 @@ public class SameTree {
      */
     class Solution {
         public boolean isSameTree(TreeNode p, TreeNode q) {
-            StringBuilder pBu = new StringBuilder("#");
-            StringBuilder qBu = new StringBuilder("#");
-            zipTreeNode(p, pBu);
-            zipTreeNode(q, qBu);
-            return pBu.toString().equalsIgnoreCase(qBu.toString());
-        }
-
-        public void zipTreeNode(TreeNode node, StringBuilder builder) {
-            if (node == null) {
-                builder.append("@").append("#");
-            } else {
-                builder.append(node.val).append("#");
-                zipTreeNode(node.left, builder);
-                zipTreeNode(node.right, builder);
+            if (p == q) {
+                return true;
             }
+
+            if (p == null || q == null) {
+                return false;
+            }
+            return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
