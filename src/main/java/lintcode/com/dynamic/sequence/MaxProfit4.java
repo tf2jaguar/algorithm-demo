@@ -58,33 +58,38 @@ public class MaxProfit4 {
             return sum;
         }
 
-        int[][] dp = new int[m + 1][n + 1];
-        dp[0][1] = 0;
+        // 滚动数组
+        int[][] dp = new int[2][n + 1];
+        int old, now = 0;
+
         // 初始化，求最大值，此处初始化为Integer.MIN_VALUE
+        dp[now][1] = 0;
         for (i = 2; i <= n; i++) {
-            dp[0][i] = Integer.MIN_VALUE;
+            dp[now][i] = Integer.MIN_VALUE;
         }
 
         for (i = 1; i <= m; i++) {
+            old = now;
+            now = 1 - now;
             // 处于1、3、5、……、2K+1  -- 手中无股票状态
             for (j = 1; j <= n; j += 2) {
-                dp[i][j] = dp[i - 1][j];
-                if (i > 1 && j > 1 && dp[i - 1][j - 1] != Integer.MIN_VALUE) {
-                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + prices[i - 1] - prices[i - 2]);
+                dp[now][j] = dp[old][j];
+                if (i > 1 && j > 1 && dp[old][j - 1] != Integer.MIN_VALUE) {
+                    dp[now][j] = Math.max(dp[now][j], dp[old][j - 1] + prices[i - 1] - prices[i - 2]);
                 }
             }
             // 处于2、4、6、……、2K  -- 手中有股票状态
             for (j = 2; j <= n - 1; j += 2) {
-                dp[i][j] = dp[i - 1][j - 1];
-                if (i > 1 && dp[i - 1][j] != Integer.MIN_VALUE) {
-                    dp[i][j] = Math.max(dp[i - 1][j] + prices[i - 1] - prices[i - 2], dp[i][j]);
+                dp[now][j] = dp[old][j - 1];
+                if (i > 1 && dp[old][j] != Integer.MIN_VALUE) {
+                    dp[now][j] = Math.max(dp[old][j] + prices[i - 1] - prices[i - 2], dp[now][j]);
                 }
             }
         }
 
         int res = 0;
-        for (i = 1; i <= n; i++) {
-            res = Math.max(res, dp[m][i]);
+        for (i = 1; i <= n; i += 2) {
+            res = Math.max(res, dp[now][i]);
         }
         return res;
     }
