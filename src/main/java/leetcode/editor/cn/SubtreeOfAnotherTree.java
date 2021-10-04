@@ -64,6 +64,41 @@ public class SubtreeOfAnotherTree {
      */
     class Solution {
         public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+//            return zip(root, subRoot);
+            return recursion(root, subRoot);
+        }
+
+        /**
+         * 2. 递归解法
+         */
+        public boolean recursion(TreeNode a, TreeNode b) {
+            return isSubTree(a, b);
+        }
+
+        private boolean isSubTree(TreeNode a, TreeNode b) {
+            if (a == b) {
+                return true;
+            }
+            if (a == null || b == null) {
+                return false;
+            }
+            return a.val == b.val && isSameTree(a, b) || isSubTree(a.left, b) || isSubTree(a.right, b);
+        }
+
+        private boolean isSameTree(TreeNode a, TreeNode b) {
+            if (a == b) {
+                return true;
+            }
+            if (a == null || b == null) {
+                return false;
+            }
+            return a.val == b.val && isSameTree(a.left, b.left) && isSameTree(a.right, b.right);
+        }
+
+        /**
+         * 1. 压缩算法。将树按照策略压缩成字符串，树的问题变成了字符串问题
+         */
+        public boolean zip(TreeNode root, TreeNode subRoot) {
             StringBuilder rB = new StringBuilder("#");
             StringBuilder sB = new StringBuilder("#");
             zipTreeNode(root, rB);
@@ -71,7 +106,7 @@ public class SubtreeOfAnotherTree {
             return rB.toString().contains(sB.toString());
         }
 
-        public void zipTreeNode(TreeNode node, StringBuilder builder) {
+        private void zipTreeNode(TreeNode node, StringBuilder builder) {
             if (node == null) {
                 builder.append("@").append("#");
             } else {
