@@ -45,7 +45,8 @@ package lintcode.com.dynamic.coordinate;
 public class LongestIncreasingSubsequence {
     public static void main(String[] args) {
         LongestIncreasingSubsequence lis = new LongestIncreasingSubsequence();
-        System.out.println(lis.longestIncreasingSubsequence(new int[]{4, 2, 4, 5, 3, 7}));
+//        System.out.println(lis.longestIncreasingSubsequence(new int[]{4, 2, 4, 5, 3, 7}));
+        lis.longestIncreasingSubsequence(new int[]{4, 2, 4, 5, 3, 7});
     }
 
     /**
@@ -80,7 +81,7 @@ public class LongestIncreasingSubsequence {
                 }
             }
             dp[l] = num;
-            if (r == size){
+            if (r == size) {
                 size++;
             }
         }
@@ -92,15 +93,40 @@ public class LongestIncreasingSubsequence {
      */
     private int LIS(int[] nums, int len) {
         int[] dp = new int[len];
+        // 记录路径下标
+        int[] pi = new int[len];
+
         int res = 0;
-        for (int i = 0; i < len; i++) {
+        int i, j, p = 0;
+        for (i = 0; i < len; i++) {
             dp[i] = 1;
-            for (int j = 0; j < i; j++) {
+            pi[i] = -1;
+
+            for (j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
+                    if (dp[i] == dp[j] + 1) {
+                        // 记录决策下标
+                        pi[i] = j;
+                    }
                 }
             }
             res = Math.max(res, dp[i]);
+            if (res == dp[i]) {
+                // 记录决策下标
+                p = i;
+            }
+        }
+
+        int[] seq = new int[res];
+        for (i = res - 1; i >= 0; i--) {
+            // 从 p 倒着往前找
+            seq[i] = nums[p];
+            p = pi[p];
+        }
+
+        for (int s : seq) {
+            System.out.print(s + " ");
         }
         return res;
     }
