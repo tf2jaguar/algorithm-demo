@@ -55,6 +55,7 @@ package leetcode.editor.cn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * title: 144 : 二叉树的前序遍历
@@ -63,6 +64,8 @@ import java.util.List;
 public class BinaryTreePreorderTraversal {
     public static void main(String[] args) {
         Solution solution = new BinaryTreePreorderTraversal().new Solution();
+        TreeNode treeNode = TreeNode.generate(new Integer[]{1, null, 2, 3});
+        System.out.println(solution.preorderTraversal(treeNode));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -82,21 +85,23 @@ public class BinaryTreePreorderTraversal {
      * }
      */
     class Solution {
+        /**
+         * 根、左、右
+         */
         public List<Integer> preorderTraversal(TreeNode root) {
             List<Integer> res = new ArrayList<>();
-            preorder(root, res);
+            Stack<TreeNode> stack = new Stack<>();
+            while (root != null || !stack.isEmpty()) {
+                while (root != null) {
+                    res.add(root.val);
+                    stack.push(root);
+                    root = root.left;
+                }
+                root = stack.pop();
+                root = root.right;
+            }
             return res;
         }
-
-        private void preorder(TreeNode root, List<Integer> res) {
-            if (root == null) {
-                return;
-            }
-            res.add(root.val);
-            preorder(root.left, res);
-            preorder(root.right, res);
-        }
-
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
