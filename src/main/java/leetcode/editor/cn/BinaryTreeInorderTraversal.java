@@ -55,7 +55,6 @@ package leetcode.editor.cn;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * title: 94 : 二叉树的中序遍历
@@ -87,19 +86,29 @@ public class BinaryTreeInorderTraversal {
          * 左、根、右
          */
         public List<Integer> inorderTraversal(TreeNode root) {
-            List<Integer> res = new LinkedList<>();
-            Stack<TreeNode> stack = new Stack<>();
-            while (root != null || !stack.isEmpty()) {
-                while (root != null) {
-                    stack.push(root);
-                    root = root.left;
+            TreeNode cur = root;
+            List<Integer> ans = new LinkedList<>();
+            while (cur != null) {
+                if (cur.left != null) {
+                    TreeNode pre = cur.left;
+                    while (pre.right != null && pre.right != cur) {
+                        pre = pre.right;
+                    }
+                    if (pre.right == null) {
+                        pre.right = cur;
+                        cur = cur.left;
+                    } else {
+                        ans.add(cur.val);
+                        pre.right = null;
+                        cur = cur.right;
+                    }
+                } else {
+                    ans.add(cur.val);
+                    cur = cur.right;
                 }
-
-                root = stack.pop();
-                res.add(root.val);
-                root = root.right;
             }
-            return res;
+
+            return ans;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
