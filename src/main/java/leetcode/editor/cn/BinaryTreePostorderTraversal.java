@@ -18,6 +18,7 @@ package leetcode.editor.cn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * title: 145 : 二叉树的后序遍历
@@ -26,6 +27,8 @@ import java.util.List;
 public class BinaryTreePostorderTraversal {
     public static void main(String[] args) {
         Solution solution = new BinaryTreePostorderTraversal().new Solution();
+        TreeNode treeNode = TreeNode.generate(new Integer[]{1, null, 2, 3});
+        System.out.println(solution.postorderTraversal(treeNode));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -50,17 +53,25 @@ public class BinaryTreePostorderTraversal {
          */
         public List<Integer> postorderTraversal(TreeNode root) {
             List<Integer> res = new ArrayList<>();
-            postorder(root, res);
-            return res;
-        }
-
-        private void postorder(TreeNode root, List<Integer> res) {
-            if (root == null) {
-                return;
+            Stack<TreeNode> stack = new Stack<>();
+            TreeNode pre = null;
+            while (root != null || !stack.isEmpty()) {
+                while (root != null) {
+                    stack.push(root);
+                    root = root.left;
+                }
+                // 因为迭代过程中，根节点会被遍历两次
+                root = stack.peek();
+                if (root.right == null || root.right == pre) {
+                    res.add(root.val);
+                    stack.pop();
+                    pre = root;
+                    root = null;
+                } else {
+                    root = root.right;
+                }
             }
-            postorder(root.left, res);
-            postorder(root.right, res);
-            res.add(root.val);
+            return res;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
