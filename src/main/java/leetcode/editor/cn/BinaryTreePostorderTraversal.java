@@ -45,6 +45,9 @@ public class BinaryTreePostorderTraversal {
      * }
      */
     class Solution {
+        /**
+         * 左、右、根
+         */
         public List<Integer> postorderTraversal(TreeNode root) {
             List<Integer> res = new ArrayList<>();
             postorder(root, res);
