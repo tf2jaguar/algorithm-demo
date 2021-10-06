@@ -68,52 +68,26 @@ public class ValidateBinarySearchTree {
      */
     class Solution {
         private boolean res = true;
+        private Long preNum = Long.MIN_VALUE;
 
         public boolean isValidBST(TreeNode root) {
-            preOrder(root, Long.MIN_VALUE, Long.MAX_VALUE);
+            middleOrder(root);
             return res;
         }
 
-        /**
-         * 前序，这里判定下根节点和左右子节点的大小
-         */
-        // 坑1： 这里要用 long
-        private void preOrder(TreeNode root, Long minValue, Long maxValue) {
-            if (root == null || !res) {
+        public void middleOrder(TreeNode node) {
+            if (!res) {
                 return;
             }
-
-            // 坑2： 这里不能相等
-            if (minValue >= root.val || maxValue <= root.val) {
-                res = false;
-                return;
-            }
-
-            preOrder(root.left, minValue, (long) root.val);
-            preOrder(root.right, (long) root.val, maxValue);
-        }
-
-        /**
-         * 中序遍历后重新比较一次
-         */
-        private boolean isValidBst1(TreeNode root) {
-            List<Integer> res = new ArrayList<>();
-            middleOrder(root, res);
-            for (int i = 1; i < res.size(); i++) {
-                if (res.get(i - 1) >= res.get(i)) {
-                    return false;
+            if (node != null) {
+                middleOrder(node.left);
+                if (preNum >= node.val) {
+                    res = false;
+                    return;
                 }
+                preNum = (long) node.val;
+                middleOrder(node.right);
             }
-            return true;
-        }
-
-        public void middleOrder(TreeNode node, List<Integer> list) {
-            if (node == null) {
-                return;
-            }
-            middleOrder(node.left, list);
-            list.add(node.val);
-            middleOrder(node.right, list);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
