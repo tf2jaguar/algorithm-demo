@@ -30,6 +30,8 @@
 // Related Topics 树 深度优先搜索 二叉搜索树 二叉树 👍 568 👎 0
 package leetcode.editor.cn;
 
+import java.util.Stack;
+
 /**
  * title: 99 : 恢复二叉搜索树
  * create: 2021-10-06 15:03:29
@@ -59,10 +61,9 @@ public class RecoverBinarySearchTree {
      * }
      */
     class Solution {
-        // 记录第一个出现 pre.val > cur.val 时的两个值
+
         TreeNode first = null;
         TreeNode second = null;
-        // 记录中序遍历（搜索树的顺序遍历）时，前一个节点
         TreeNode pre = null;
 
         public void recoverTree(TreeNode root) {
@@ -75,18 +76,20 @@ public class RecoverBinarySearchTree {
         }
 
         private void midorder(TreeNode root) {
-            if (root == null) {
-                return;
+            Stack<TreeNode> stack = new Stack<>();
+            while (root != null || !stack.isEmpty()) {
+                while (root != null) {
+                    stack.push(root);
+                    root = root.left;
+                }
+                root = stack.pop();
+                process(root);
+                root = root.right;
             }
-            midorder(root.left);
-            process(root);
-            midorder(root.right);
         }
 
         private void process(TreeNode root) {
-            // 如果前一个节点不为空，且前一个节点比当前节点值要大，则破坏了搜索二叉树，需要记录下来
             if (pre != null && pre.val > root.val) {
-                // 如果first没有更新果，则记录当前节点的上一个节点为第一个待替换的节点
                 if (first == null) {
                     first = pre;
                 }
