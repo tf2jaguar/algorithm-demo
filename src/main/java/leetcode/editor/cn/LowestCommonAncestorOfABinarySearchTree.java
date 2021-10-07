@@ -55,28 +55,23 @@ public class LowestCommonAncestorOfABinarySearchTree {
      */
 
     class Solution {
-        TreeNode res = null;
 
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-            postorder(root, p, q);
-            return res;
-        }
-
-        private int postorder(TreeNode root, TreeNode p, TreeNode q) {
-            if (root == null) {
-                return 0;
-            }
-            int l = postorder(root.left, p, q);
-            int r = postorder(root.right, p, q);
-            if (l == 1 && r == 1) {
-                res = root;
-            } else if (l == 1 || r == 1) {
-                // 因为所有节点都是唯一的，数据无重复
-                if (root == p || root == q) {
-                    res = root;
+            TreeNode cur = root;
+            while (true) {
+                // 如果当前节点的值大于 pp 和 qq 的值，说明 pp 和 qq 应该在当前节点的左子树，因此将当前节点移动到它的左子节点
+                if (p.val < cur.val && q.val < cur.val) {
+                    cur = cur.left;
+                    // 如果当前节点的值小于 pp 和 qq 的值，说明 pp 和 qq 应该在当前节点的右子树，因此将当前节点移动到它的右子节点
+                } else if (p.val > cur.val && q.val > cur.val) {
+                    cur = cur.right;
+                } else {
+                    // 如果当前节点的值不满足上述两条要求，那么说明当前节点就是「分岔点」。
+                    // 此时，pp 和 qq 要么在当前节点的不同的子树中，要么其中一个就是当前节点
+                    break;
                 }
             }
-            return l + r + ((root == p || root == q) ? 1 : 0);
+            return cur;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
