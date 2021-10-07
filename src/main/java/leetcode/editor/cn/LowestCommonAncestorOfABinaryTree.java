@@ -63,37 +63,21 @@ public class LowestCommonAncestorOfABinaryTree {
      * }
      */
     class Solution {
-        TreeNode res = null;
-
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-            postorder(root, p, q);
-            return res;
-        }
-
-        /**
-         * 左、右、根
-         * <p>
-         * 后序遍历，将子节点中的信息传递上来
-         */
-        private int postorder(TreeNode root, TreeNode p, TreeNode q) {
             if (root == null) {
-                return 0;
+                return null;
             }
-            // 查看子节点统计个数
-            int lc = postorder(root.left, p, q);
-            int rc = postorder(root.right, p, q);
-            // 如果左、右各统计了一个，则当前节点即为最近的公共祖先
-            if (lc == 1 && rc == 1) {
-                res = root;
-            } else if (lc == 1 || rc == 1) {
-                // 如果左边找到一个 或 右边找到一个，且当前节点等于节点 p或q
-                // 则当前节点为最近的公共祖先
-                if (root == p || root == q) {
-                    res = root;
-                }
+            if (root == p || root == q) {
+                return root;
             }
-            // 返回当前节点 + 左、右两端中p、q出现的次数
-            return lc + rc + ((root == p || root == q) ? 1 : 0);
+
+            TreeNode l = lowestCommonAncestor(root.left, p, q);
+            TreeNode r = lowestCommonAncestor(root.right, p, q);
+            if (l != null && r != null) {
+                return root;
+            }
+
+            return l != null ? l : r;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
