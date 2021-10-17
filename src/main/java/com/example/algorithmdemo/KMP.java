@@ -2,72 +2,60 @@ package com.example.algorithmdemo;
 
 /**
  * 解决原始问题：str1和str2为两个字符串，其中str1中的某个子串是否等于str2.
+ * 参考：https://leetcode-cn.com/problems/implement-strstr/solution/dai-ma-sui-xiang-lu-kmpsuan-fa-xiang-jie-mfbs/
  *
  * @author ：guodongzhang
- * @date ：Created in 2021/8/24 17:19
+ * @since  ：Created in 2021/8/24 17:19
  */
 public class KMP {
 
     /**
      * 获取KMP算法中pattern字符串对应的next数组
      *
-     * @param chars 模式字符串对应的字符数组
+     * @param s 模式字符串对应的字符数组
      */
-    public int[] getNext(char[] chars) {
-        if (chars.length == 1) {
-            return new int[]{-1};
-        }
-        int[] next = new int[chars.length];
-        next[0] = -1;
-        next[1] = 0;
-        // 当前待求next的位置
-        int i = 2;
-        // 上一个位置的next数组的值
-        int lastNextVal = 0;
-        while (i < chars.length) {
-            // 当前待求next值位置的前一个位置的值，和该位置对应的next数组的值的位置是否相等
-            // 相等则直接将该位置对应的next数组的值 加一，即为当前位置的next数组的值
-            if (chars[i - 1] == chars[lastNextVal]) {
-                next[i++] = ++lastNextVal;
-            } else if (lastNextVal > 0) {
-                // 两个值不想等，如果上一个位置的next数组的值不为-1，则向前跳到next值的位置
-                lastNextVal = next[lastNextVal];
-            } else {
-                next[i++] = 0;
+    public int[] getNext(String s) {
+        int[] next = new int[s.length()];
+        int j = 0;
+        for (int i = 1; i < s.length(); i++) { // 注意i就从1开始
+            while (j > 0 && s.charAt(i) != s.charAt(j)) {  // 前后缀不相同了，回朔
+                j = next[j - 1];
             }
+
+            if (s.charAt(i) == s.charAt(j)) { // 找到相同的前后缀
+                j++;
+            }
+            next[i] = j; // 将j（前缀的长度）赋给next[i]
         }
         return next;
     }
 
     public int indexOf(String source, String pattern) {
-        char[] sChar = source.toCharArray();
-        char[] pChar = pattern.toCharArray();
-        int sLen = sChar.length;
-        int pLen = pChar.length;
-        int[] next = getNext(pChar);
+        if (pattern == null || pattern.length() == 0) {
+            return 0;
+        }
+        int[] next = getNext(pattern);
 
-        int i = 0, j = 0;
-        while (i < sLen && j < pLen) {
-            // 如果当前字符匹配成功(src[i] = ptn[j]),都让i++,j++
-            if (sChar[i] == pChar[j]) {
-                i++;
+        int j = 0;
+        for (int i = 0; i < source.length(); i++) { // 注意i就从0开始
+            while (j > 0 && source.charAt(i) != pattern.charAt(j)) { // 匹配，j和i同时向后移动，i的增加在for循环里
+                j = next[j - 1]; // j 寻找之前匹配的位置
+            }
+            if (source.charAt(i) == pattern.charAt(j)) { // 匹配，j和i同时向后移动，i的增加在for循环里
                 j++;
-            } else if (next[j] == -1) {
-                // 如果pattern模式串的 next 数组的值为 -1 那么，pattern模式串已经到了最开头，无法再往前跳了。将源串位置加一
-                i++;
-            } else {
-                // j=next[j],即让pattern模式串右移j-next[j]个单位
-                j = next[j];
+            }
+            if (j == pattern.length()) { // 文本串s里出现了模式串t
+                return (i - pattern.length() + 1);
             }
         }
-
-        return j == pLen ? i - j : -1;
+        return -1;
     }
-
 
     public static void main(String[] args) {
         KMP k = new KMP();
         int i = k.indexOf("aabbaa", "bbaa");
         System.out.println(i);
+        int[] ledales = k.getNext("ledale");
+        System.out.println();
     }
 }
