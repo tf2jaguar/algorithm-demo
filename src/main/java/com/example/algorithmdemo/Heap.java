@@ -102,11 +102,27 @@ public class Heap {
         return size;
     }
 
+    public void status() {
+        for (int d : data) {
+            System.out.print(d + ", ");
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         // 7、8、9、10
         // 11、12、1、2、3、4、5、6、7
-        int a = 4*19000+8*21000;
-        System.out.println(a);
-        System.out.println(a/12);
+        Heap heap = new Heap(new int[5]);
+        for (int i = 5; i < 10; i++) {
+            heap.status();
+            heap.push(i);
+        }
+        for (int i = 35; i >= 15; i -= 5) {
+            int pop = heap.pop();
+            System.out.println("pop " + pop);
+            heap.push(i);
+            heap.status();
+        }
+
     }
 }
