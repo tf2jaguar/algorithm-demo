@@ -53,59 +53,50 @@ package leetcode.editor.cn;
 public class ImplementStrstr {
     public static void main(String[] args) {
         Solution solution = new ImplementStrstr().new Solution();
+        String a = "ababaabbbbababbaabaaabaabbaaaabbabaabbbbbbabbaabbabbbabbbbbaaabaababbbaabbbabbbaabbbbaaabbababbabbbabaaabbaabbabababbbaaaaaaababbabaababaabbbbaaabbbabb";
+        String b = "abbabbbabaa";
+        System.out.println(solution.strStr(a, b));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int strStr(String haystack, String needle) {
-            if (needle == null || "".equals(needle)) {
+            if (needle == null || needle.length() == 0) {
                 return 0;
             }
-            char[] hChars = haystack.toCharArray();
-            char[] nChars = needle.toCharArray();
-            int hLen = hChars.length;
-            int nLen = nChars.length;
-            int[] next = getNext(nChars);
+            int[] next = getNext(needle);
+            int j = 0;
+            for (int i = 0; i < haystack.length(); i++) {
+                while (j > 0 && haystack.charAt(i) != needle.charAt(j)) {
+                    j = next[j - 1];
+                }
 
-            int i = 0, j = 0;
-            while (i < hLen && j < nLen) {
-                // 如果j = -1,或者当前字符匹配成功(src[i] = ptn[j]),都让i++,j++
-                if (hChars[i] == nChars[j]) {
-                    i++;
+                if (haystack.charAt(i) == needle.charAt(j)) {
                     j++;
-                } else if (next[j] == -1) {
-                    i++;
-                } else {
-                    // 如果j!=-1且当前字符匹配失败,则令i不变,j=next[j],即让pattern模式串右移j-next[j]个单位
-                    j = next[j];
+                }
+                if (j == needle.length()) {
+                    return (i - needle.length() + 1);
                 }
             }
-            return j == nLen ? i - j : -1;
+            return -1;
         }
 
         /**
          * 获取KMP算法中pattern字符串对应的next数组
          *
-         * @param chars 模式字符串对应的字符数组
+         * @param s 模式字符串对应的字符数组
          */
-        public int[] getNext(char[] chars) {
-            if (chars == null || chars.length == 0) {
-                return new int[]{-1};
-            }
-
-            int[] next = new int[chars.length];
-            next[0] = -1;
-            next[1] = 0;
-            int lastNextVal = 0;
-            int i = 2;
-            while (i < chars.length) {
-                if (chars[i - 1] == chars[lastNextVal]) {
-                    next[i++] = ++lastNextVal;
-                } else if (lastNextVal > 0) {
-                    lastNextVal = next[lastNextVal];
-                } else {
-                    next[i++] = 0;
+        public int[] getNext(String s) {
+            int[] next = new int[s.length()];
+            int j = 0;
+            for (int i = 1; i < s.length(); i++) {
+                if (j > 0 && s.charAt(i) != s.charAt(j)) {
+                    j = next[j - 1];
                 }
+                if (s.charAt(i) == s.charAt(j)) {
+                    j++;
+                }
+                next[i] = j;
             }
             return next;
         }
