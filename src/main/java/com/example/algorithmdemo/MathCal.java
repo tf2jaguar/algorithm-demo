@@ -31,18 +31,24 @@ public class MathCal {
         return (int) ans;
     }
 
-    public static int pow(int m, int n) {
-        // m 的 0 次方等于1
-        int res = 1, tmp = m;
-        while (n != 0) {
-            // 奇数
-            if ((n & 1) == 1) {
-                res *= tmp;
+    public static double myPow(double x, int n) {
+        return (long) n >= 0 ? quickMul(x, n) : 1.0 / quickMul(x, -(long) n);
+    }
+
+    public static double quickMul(double x, long n) {
+        double ans = 1.0, tmp = x;
+        // 在对 N 进行二进制拆分的同时计算答案
+        while (n > 0) {
+            if (n % 2 == 1) {
+                // 如果 N 二进制表示的最低位为 1，那么需要计入贡献
+                ans *= tmp;
             }
+            // 将贡献不断地平方
             tmp *= tmp;
-            n = n >> 1;
+            // 舍弃 N 二进制表示的最低位，这样我们每次只要判断最低位即可
+            n /= 2;
         }
-        return res;
+        return ans;
     }
 
     public static double sqrt(int n) {
@@ -84,10 +90,21 @@ public class MathCal {
     }
 
     public static void main(String[] args) {
-        System.out.println(MathCal.pow(2, 3));
+        System.out.println(MathCal.myPow(2, 10));
 
         System.out.println(MathCal.lifang(8.00));
 //        System.out.println(MathCal.sqrt(4));
 //        System.out.println(MathCal.divide(36, 6));
+        // 值传递，引用传递
+//        String a = "1122";
+//        System.out.println(a);
+//        test(a);
+//        System.out.println(a);
+
+    }
+
+    public static void test(String a) {
+        a = a + "ddd";
+        System.out.println(a);
     }
 }
