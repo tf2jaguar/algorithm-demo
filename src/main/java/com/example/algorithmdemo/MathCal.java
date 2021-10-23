@@ -5,6 +5,30 @@ package com.example.algorithmdemo;
  * @date 2021/9/28 19:43
  */
 public class MathCal {
+    public static int divide(int dividend, int divisor) {
+        long a = dividend, b = divisor, ans = 0;
+        boolean isNeg = a < 0 && b > 0 || a > 0 && b < 0;
+        // 试除
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (a >= b) {
+            long base = b, cnt = 1;
+            // 除数不断翻倍，直至大于被除数
+            while ((base << 1) <= a) {
+                base <<= 1;
+                cnt <<= 1;
+            }
+            // 将倍数累加
+            ans += cnt;
+            // 被除数在减去这个不超过被除数的除数的最大倍数
+            a -= base;
+        }
+
+        if (isNeg) ans = -ans;
+        if (ans < Integer.MIN_VALUE || ans > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        return (int) ans;
+    }
+
     public static int pow(int m, int n) {
         // m 的 0 次方等于1
         int res = 1, tmp = m;
@@ -43,8 +67,9 @@ public class MathCal {
     }
 
     public static void main(String[] args) {
-        int pow = MathCal.pow(2, 5);
-        System.out.println(pow);
-        System.out.println(MathCal.sqrt(4));
+//        int pow = MathCal.pow(2, 5);
+//        System.out.println(pow);
+//        System.out.println(MathCal.sqrt(4));
+        System.out.println(MathCal.divide(36, 6));
     }
 }
