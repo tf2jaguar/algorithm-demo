@@ -1,5 +1,7 @@
 package com.example.algorithmdemo;
 
+import java.text.DecimalFormat;
+
 /**
  * @author zhangguodong
  * @date 2021/9/28 19:43
@@ -66,10 +68,26 @@ public class MathCal {
         return high;
     }
 
+    public static double lifang(double n) {
+        double n1 = n;
+        double n2 = niuDunDieDai(n1, n);
+        while (Math.abs(n1 - n2) > 0.000001) {
+            n1 = n2;
+            n2 = niuDunDieDai(n1, n);
+        }
+        DecimalFormat df = new DecimalFormat("#0.0");
+        return Double.parseDouble(df.format(n2));
+    }
+
+    private static double niuDunDieDai(double n1, double n2) {
+        return (2 * n1 / 3) + (n2 / (n1 * n1 * 3));
+    }
+
     public static void main(String[] args) {
-//        int pow = MathCal.pow(2, 5);
-//        System.out.println(pow);
+        System.out.println(MathCal.pow(2, 3));
+
+        System.out.println(MathCal.lifang(8.00));
 //        System.out.println(MathCal.sqrt(4));
-        System.out.println(MathCal.divide(36, 6));
+//        System.out.println(MathCal.divide(36, 6));
     }
 }
