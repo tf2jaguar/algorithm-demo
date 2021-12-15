@@ -40,7 +40,7 @@
 // 
 //
 // 进阶：你可以想出一个时间复杂度小于 O(n²) 的算法吗？ 
-// Related Topics 数组 哈希表 👍 12871 👎 0
+// Related Topics 数组 哈希表 👍 12407 👎 0
 
 package leetcode.editor.cn;
 
@@ -49,7 +49,7 @@ import java.util.Map;
 
 /**
  * title: 1 : 两数之和
- * create: 2021-12-15 10:50:37
+ * since: 2021-10-23 08:38:42
  */
 public class TwoSum {
     public static void main(String[] args) {
@@ -59,10 +59,12 @@ public class TwoSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] nums, int target) {
+            // num - idx
             Map<Integer, Integer> map = new HashMap<>();
             for (int i = 0; i < nums.length; i++) {
-                if (map.containsKey(target - nums[i])) {
-                    return new int[]{i, map.get(target - nums[i])};
+                int remain = target - nums[i];
+                if (map.get(remain) != null) {
+                    return new int[]{map.get(remain), i};
                 }
                 map.put(nums[i], i);
             }
