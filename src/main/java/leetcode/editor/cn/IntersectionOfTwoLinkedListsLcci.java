@@ -82,7 +82,7 @@ public class IntersectionOfTwoLinkedListsLcci {
         ListNode common = new ListNode(8, new ListNode(4, new ListNode(5)));
         ListNode heada = new ListNode(4, new ListNode(1, common));
         ListNode headb = new ListNode(5, new ListNode(0, new ListNode(1, common)));
-        ListNode intersectionNode = solution.getIntersectionNode(common, headb);
+        ListNode intersectionNode = solution.getIntersectionNode(heada, headb);
         System.out.println(intersectionNode);
     }
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -99,7 +99,26 @@ public class IntersectionOfTwoLinkedListsLcci {
      * }
      */
     public class Solution {
-        public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        /**
+         * 分别遍历两个链表，某一个遍历到空节点时，则将头指向另一个的头节点，直到找到相同的节点
+         * （相当于遍历了一遍短链表 + 长链表到相同节点的长度）
+         */
+        public ListNode method2(ListNode headA, ListNode headB) {
+            if (headA == null || headB == null) return null;
+            ListNode hA = headA, hB = headB;
+            while (hA != hB) {
+                hA = hA == null ? headB : hA.next;
+                hB = hB == null ? headA : hB.next;
+            }
+            return hA;
+        }
+
+        /**
+         * 利用栈。 两个链表分别入栈，然后pop
+         * 如果最后一个都不相同则不相交；
+         * 一直pop直到出现不相同的节点时，返回上一个相同的节点
+         */
+        public ListNode method1(ListNode headA, ListNode headB) {
             Stack<ListNode> stacka = new Stack<>();
             Stack<ListNode> stackb = new Stack<>();
             ListNode tmp = headA;
@@ -126,6 +145,10 @@ public class IntersectionOfTwoLinkedListsLcci {
                 stackb.pop();
             }
             return res;
+        }
+
+        public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            return method2(headA, headB);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
