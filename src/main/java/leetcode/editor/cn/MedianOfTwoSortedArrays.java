@@ -70,7 +70,7 @@ public class MedianOfTwoSortedArrays {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-            return method1(nums1, nums2);
+            return method2(nums1, nums2);
         }
 
         /**
@@ -184,7 +184,6 @@ public class MedianOfTwoSortedArrays {
         }
     }
 
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
