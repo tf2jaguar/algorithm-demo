@@ -38,6 +38,8 @@ import java.util.Arrays;
 public class KthLargestElementInAnArray {
     public static void main(String[] args) {
         Solution solution = new KthLargestElementInAnArray().new Solution();
+        int i = solution.method2(new int[]{3, 2, 1, 5, 6, 4}, 2);
+        System.out.println(i);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
