@@ -87,7 +87,7 @@ public class KthLargestElementInAnArray {
          * nums[left + 1..j] < nums[left]
          * nums(j..i) >= nums[left]
          */
-        private int partition(int[] nums, int left, int right) {
+        public int partition(int[] nums, int left, int right) {
             int pivot = nums[left];
             int j = left;
             for (int i = left + 1; i <= right; i++) {
