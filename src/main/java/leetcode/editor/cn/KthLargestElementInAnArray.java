@@ -30,6 +30,7 @@
 package leetcode.editor.cn;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 /**
  * title: 215 : 数组中的第K个最大元素
@@ -38,7 +39,7 @@ import java.util.Arrays;
 public class KthLargestElementInAnArray {
     public static void main(String[] args) {
         Solution solution = new KthLargestElementInAnArray().new Solution();
-        int i = solution.method2(new int[]{3, 2, 1, 5, 6, 4}, 2);
+        int i = solution.method3(new int[]{3, 2, 1, 5, 6, 4}, 2);
         System.out.println(i);
     }
 
@@ -86,7 +87,7 @@ public class KthLargestElementInAnArray {
          * nums[left + 1..j] < nums[left]
          * nums(j..i) >= nums[left]
          */
-        public int partition(int[] nums, int left, int right) {
+        private int partition(int[] nums, int left, int right) {
             int pivot = nums[left];
             int j = left;
             for (int i = left + 1; i <= right; i++) {
@@ -108,6 +109,25 @@ public class KthLargestElementInAnArray {
             nums[index2] = temp;
         }
 
+        /**
+         * 方法三：优先级队列
+         */
+        public  int method3(int[] nums, int k) {
+            int len = nums.length;
+
+            PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
+            for (int i = 0; i < k; i++) {
+                minHeap.offer(nums[i]);
+            }
+            for (int i = k; i < len; i++) {
+                Integer peek = minHeap.peek();
+                if (peek < nums[i]){
+                    minHeap.poll();
+                    minHeap.offer(nums[i]);
+                }
+            }
+            return minHeap.peek();
+        }
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
