@@ -13,7 +13,8 @@ public class Sort {
 //        sort.insert(arr);
 //        sort.select(arr);
 //        sort.merge(arr);
-        sort.quick(arr);
+//        sort.quick(arr);
+        sort.bucket(arr);
         printArr(arr);
 
     }
@@ -153,6 +154,32 @@ public class Sort {
         return new int[]{less, more};
     }
 
+//======================================================================================================================
+
+    /**
+     * 桶排序
+     * 非原地排序算法
+     * 稳定的排序算法
+     * 最好时间复杂度O(n)
+     * 最坏时间复杂度O(n)
+     * 平均时间复杂度O(n)
+     */
+    public void bucket(int[] arr) {
+        int max = Integer.MIN_VALUE;
+        for (int a : arr) {
+            max = Math.max(max, a);
+        }
+        int[] bucket = new int[max + 1];
+        for (int a : arr) {
+            bucket[a]++;
+        }
+        int i = 0;
+        for (int j = 0; j < bucket.length; j++) {
+            while (bucket[j]-- > 0) {
+                arr[i++] = j;
+            }
+        }
+    }
 
     private void swap(int[] arr, int a, int b) {
         int tmp = arr[a];
