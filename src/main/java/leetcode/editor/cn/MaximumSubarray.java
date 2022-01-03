@@ -54,6 +54,13 @@ public class MaximumSubarray {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int maxSubArray(int[] nums) {
+            return method1(nums);
+        }
+
+        /**
+         * 经典动态规划
+         */
+        private int method1(int[] nums) {
             int[] dp = new int[nums.length];
             dp[0] = nums[0];
             for (int i = 1; i < nums.length; i++) {
@@ -70,6 +77,18 @@ public class MaximumSubarray {
                 res = Math.max(res, dp[i]);
             }
             return res;
+        }
+
+        /**
+         * 节省空间的动态规划
+         */
+        private int method2(int[] nums) {
+            int pre = 0, maxAns = nums[0];
+            for (int n : nums) {
+                pre = Math.max(pre + n, n);
+                maxAns = Math.max(maxAns, pre);
+            }
+            return maxAns;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
