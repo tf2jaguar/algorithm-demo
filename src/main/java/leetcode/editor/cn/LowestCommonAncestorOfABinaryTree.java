@@ -63,6 +63,11 @@ public class LowestCommonAncestorOfABinaryTree {
      * }
      */
     class Solution {
+        /**
+         * // p、q 有一个和 root 相等就返回
+         * // 左边和右边都找到了，则当前节点就是公共祖先
+         * // 否则返回不为空的那个(找到的那边)
+         */
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
             if (root == null) {
                 return null;
