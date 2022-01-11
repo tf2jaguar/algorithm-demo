@@ -56,6 +56,13 @@ public class LongestPalindromicSubstring {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestPalindrome(String s) {
+            return manacherMethod(s);
+        }
+
+        /**
+         * 中心扩展法
+         */
+        public String expandMethod(String s) {
             if (s == null || s.length() < 1) {
                 return "";
             }
@@ -87,7 +94,7 @@ public class LongestPalindromicSubstring {
         /**
          * manacher 版本
          */
-        public String longestPalindrome1(String s) {
+        public String manacherMethod(String s) {
             char[] chars = manacher(s);
             // 最长的回文字符串开始、结束位置
             int start = 0, end = -1;
@@ -123,7 +130,7 @@ public class LongestPalindromicSubstring {
         private char[] manacher(String s) {
             char[] res = new char[s.length() * 2 + 1];
             for (int i = 0, j = 0; i < res.length; i++) {
-                res[i++] = (i & 1) == 0 ? '#' : s.charAt(j++);
+                res[i] = (i & 1) == 0 ? '#' : s.charAt(j++);
             }
             return res;
         }
