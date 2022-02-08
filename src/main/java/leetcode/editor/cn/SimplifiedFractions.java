@@ -62,18 +62,21 @@ public class SimplifiedFractions {
                 // 分子
                 for (int j = 1; j < i; j++) {
                     // 求公约数
-                    if (!hasCommonDivisor(i, j)) res.add(j + "/" + i);
+                    if (gcd(i, j) == 1) res.add(j + "/" + i);
                 }
             }
             return res;
         }
 
-        private boolean hasCommonDivisor(int i, int j) {
-            for (int k = 2; k <= j; k++) {
-                if (i % k == 0 && j % k == 0) return true;
-            }
-            return false;
+        /**
+         * 最大公约数
+         */
+        private int gcd(int i, int j) {
+            // %: 取余（或余数）运算符用 num1 除以 num2 ，然后返回余数作为 result
+            return j != 0 ? gcd(j, i % j) : i;
         }
+
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
