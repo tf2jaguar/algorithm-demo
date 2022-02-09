@@ -51,6 +51,9 @@
 
 package leetcode.editor.cn;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * title: 2006 : 差的绝对值为 K 的数对数目
  * create: 2022-02-09 15:22:48
@@ -66,10 +69,11 @@ public class CountNumberOfPairsWithAbsoluteDifferenceK {
     class Solution {
         public int countKDifference(int[] nums, int k) {
             int count = 0;
-            for (int i = 0; i < nums.length; i++) {
-                for (int j = i + 1; j < nums.length; j++) {
-                    if (Math.abs(nums[i] - nums[j]) == k) count++;
-                }
+            Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+            for (int num : nums) {
+                // num 正负 k 是否出现，出现过次数累加则符合条件
+                count += map.getOrDefault(num - k, 0) + map.getOrDefault(num + k, 0);
+                map.put(num, map.getOrDefault(num, 0) + 1);
             }
             return count;
         }
