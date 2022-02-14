@@ -47,16 +47,19 @@ public class SingleElementInASortedArray {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        // 由于只出现一次的元素所在下标 xx 的左边有偶数个元素，因此下标 xx 一定是偶数，可以在偶数下标范围内二分查找
         public int singleNonDuplicate(int[] nums) {
-            // 排好序的，只会出现一次
-            // 1。长度为1
-            // 2。第一个/最后一个是唯一出现的
-            // 3。只会出现在下表为偶数情况
-            if (nums.length < 2 || nums[0] != nums[1]) return nums[0];
-            for (int i = 2; i < nums.length - 1; i = i + 2) {
-                if (nums[i] != nums[i - 1] && nums[i] != nums[i + 1]) return nums[i];
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int m = l + (r - l) / 2;
+                m -= m & 1;
+                if (nums[m] == nums[m + 1]) {
+                    l = m + 2;
+                } else {
+                    r = m;
+                }
             }
-            return nums[nums.length - 1];
+            return nums[l];
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
