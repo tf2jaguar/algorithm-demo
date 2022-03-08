@@ -41,6 +41,8 @@ import java.util.Set;
 public class LongestDuplicateSubstring {
     public static void main(String[] args) {
         Solution solution = new LongestDuplicateSubstring().new Solution();
+        String banana = solution.longestDupSubstring("banana");
+        System.out.println(banana);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
