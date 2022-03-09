@@ -56,6 +56,13 @@ public class LongestPalindromicSubstring {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestPalindrome(String s) {
+            return manacherMethod(s);
+        }
+
+        /**
+         * 中心扩展法
+         */
+        public String expandMethod(String s) {
             if (s == null || s.length() < 1) {
                 return "";
             }
@@ -82,6 +89,50 @@ public class LongestPalindromicSubstring {
                 ++right;
             }
             return right - left - 1;
+        }
+
+        /**
+         * manacher 版本
+         */
+        public String manacherMethod(String s) {
+            char[] chars = manacher(s);
+            // 最长的回文字符串开始、结束位置
+            int start = 0, end = -1;
+            // 回文右边界、回文中心点
+            int r = -1, c = -1;
+            // 回文半径数组
+            int[] rArr = new int[chars.length];
+
+            for (int i = 0; i < chars.length; i++) {
+                rArr[i] = r > i ? Math.min(rArr[2 * c - i], r - i) : 1;
+                while (i + rArr[i] < chars.length && i - rArr[i] > -1) {
+                    if (chars[i + rArr[i]] == chars[i - rArr[i]]) {
+                        rArr[i]++;
+                    } else {
+                        break;
+                    }
+                }
+                // 更新回文右边界、回文中心点
+                if (i + rArr[i] > r) {
+                    r = i + rArr[i];
+                    c = i;
+                }
+
+                if (rArr[i] * 2 + 1 > end - start) {
+                    start = i - rArr[i] + 1;
+                    end = i + rArr[i];
+                }
+            }
+            String tmp = new String(chars);
+            return tmp.substring(start, end).replace("#", "");
+        }
+
+        private char[] manacher(String s) {
+            char[] res = new char[s.length() * 2 + 1];
+            for (int i = 0, j = 0; i < res.length; i++) {
+                res[i] = (i & 1) == 0 ? '#' : s.charAt(j++);
+            }
+            return res;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
