@@ -51,6 +51,10 @@ public class MathCal {
         return ans;
     }
 
+    /**
+     * 开平方
+     * 二分法
+     */
     public static double sqrt(int n) {
         if (n < 0) {
             return Double.NaN;
@@ -61,7 +65,7 @@ public class MathCal {
         // 二分法逐步逼近
         int low = 0, high = n;
         while (low <= high) {
-            int mid = low + (high - low) >> 1;
+            int mid = (low + high) / 2;
             int tmp = n / mid;
             if (tmp == mid) {
                 return mid;
@@ -74,7 +78,11 @@ public class MathCal {
         return high;
     }
 
-    public static double lifang(double n) {
+    /**
+     * 开立方
+     * 牛顿迭代法
+     */
+    public static double cube(double n) {
         double n1 = n;
         double n2 = niuDunDieDai(n1, n);
         while (Math.abs(n1 - n2) > 0.000001) {
@@ -85,15 +93,19 @@ public class MathCal {
         return Double.parseDouble(df.format(n2));
     }
 
+    /**
+     * 牛顿迭代法
+     */
     private static double niuDunDieDai(double n1, double n2) {
         return (2 * n1 / 3) + (n2 / (n1 * n1 * 3));
     }
 
     public static void main(String[] args) {
-        System.out.println(MathCal.myPow(2, 10));
-
-        System.out.println(MathCal.lifang(8.00));
-//        System.out.println(MathCal.sqrt(4));
+//        System.out.println(MathCal.myPow(2, 10));
+//
+        System.out.println(MathCal.cube(8));
+        System.out.println(MathCal.cube(27.00));
+//        System.out.println(MathCal.sqrt(49));
 //        System.out.println(MathCal.divide(36, 6));
         // 值传递，引用传递
 //        String a = "1122";
@@ -103,8 +115,4 @@ public class MathCal {
 
     }
 
-    public static void test(String a) {
-        a = a + "ddd";
-        System.out.println(a);
-    }
 }

@@ -103,8 +103,8 @@ public class Heap {
     }
 
     public void status() {
-        for (int d : data) {
-            System.out.print(d + ", ");
+        for (int i = 0; i < size; i++) {
+            System.out.print(data[i] + ", ");
         }
         System.out.println();
     }
