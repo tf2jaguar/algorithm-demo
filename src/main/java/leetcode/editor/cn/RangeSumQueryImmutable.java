@@ -59,15 +59,15 @@ public class RangeSumQueryImmutable {
         int[] data;
 
         public NumArray(int[] nums) {
-            data = nums;
+            data = new int[nums.length + 1];
+            // 累加，前缀和
+            for (int i = 1; i < data.length; i++) {
+                data[i] = data[i - 1] + nums[i - 1];
+            }
         }
 
         public int sumRange(int left, int right) {
-            int tmp = 0;
-            for (int i = 0; i < data.length; i++) {
-                if (i >= left && i <= right) tmp += data[i];
-            }
-            return tmp;
+            return data[right + 1] - data[left];
         }
     }
 
