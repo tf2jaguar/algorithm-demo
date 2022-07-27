@@ -75,10 +75,14 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
                 inMap.put(inorder[i], i);
             }
 
-            return buildTree(preorder, 0, preLen - 1, inorder, 0, preLen - 1);
+            return buildTree(preorder, 0, preLen - 1, 0);
         }
 
-        private TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
+        /**
+         * 前序遍历：[ 根节点, [左子树的前序遍历结果], [右子树的前序遍历结果] ]
+         * 中序遍历：[ [左子树的中序遍历结果], 根节点, [右子树的中序遍历结果] ]
+         */
+        private TreeNode buildTree(int[] preorder, int preStart, int preEnd, int inStart) {
             if (preStart > preEnd) return null;
             Integer inIdx = inMap.get(preorder[preStart]);
 
@@ -87,9 +91,9 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
             int remain = inIdx - inStart;
 
             // 先序遍历中「从 左边界+1 开始的 remain」个元素就对应了中序遍历中「从 左边界 开始到 根节点定位-1」的元素
-            root.left = buildTree(preorder, preStart + 1, preStart + remain, inorder, inStart, inIdx - 1);
+            root.left = buildTree(preorder, preStart + 1, preStart + remain, inStart);
             // 先序遍历中「从 左边界+1 + remain 开始到 右边界」的元素就对应了中序遍历中「从 根节点定位+1 到 右边界」的元素
-            root.right = buildTree(preorder, preStart + 1 + remain, preEnd, inorder, inIdx + 1, inEnd);
+            root.right = buildTree(preorder, preStart + 1 + remain, preEnd, inIdx + 1);
             return root;
         }
     }
