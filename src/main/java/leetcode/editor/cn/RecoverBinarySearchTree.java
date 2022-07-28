@@ -67,7 +67,12 @@ public class RecoverBinarySearchTree {
         TreeNode pre = null;
 
         public void recoverTree(TreeNode root) {
-            midorder(root);
+            // 方法一：迭代
+            // midorder(root);
+
+            // 方法二：递归
+            recursion(root);
+
             if (first != null && second != null) {
                 int t = first.val;
                 first.val = second.val;
@@ -75,6 +80,16 @@ public class RecoverBinarySearchTree {
             }
         }
 
+        // 递归
+        private void recursion(TreeNode node) {
+            if (node == null) return;
+
+            recursion(node.left);
+            process(node);
+            recursion(node.right);
+        }
+
+        // 迭代
         private void midorder(TreeNode root) {
             Stack<TreeNode> stack = new Stack<>();
             while (root != null || !stack.isEmpty()) {
