@@ -35,7 +35,9 @@
 
 package leetcode.editor.cn;
 
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * title: 105 : 从前序与中序遍历序列构造二叉树
@@ -68,6 +70,41 @@ public class ConstructBinaryTreeFromPreorderAndInorderTraversal {
         HashMap<Integer, Integer> inMap;
 
         public TreeNode buildTree(int[] preorder, int[] inorder) {
+            // 递归
+            // return recursion(preorder, inorder);
+
+            // 迭代
+            return iteration(preorder, inorder);
+        }
+
+        private TreeNode iteration(int[] preorder, int[] inorder) {
+            if (preorder == null || preorder.length == 0) return null;
+
+            TreeNode root = new TreeNode(preorder[0]);
+            Deque<TreeNode> stack = new LinkedList<TreeNode>();
+            stack.push(root);
+
+            int inorderIndex = 0;
+            for (int i = 1; i < preorder.length; i++) {
+                int preorderVal = preorder[i];
+                TreeNode peek = stack.peek();
+
+                if (peek.val != inorder[inorderIndex]) {
+                    peek.left = new TreeNode(preorderVal);
+                    stack.push(peek.left);
+                } else {
+                    while (!stack.isEmpty() && stack.peek().val == inorder[inorderIndex]) {
+                        peek = stack.pop();
+                        inorderIndex++;
+                    }
+                    peek.right = new TreeNode(preorderVal);
+                    stack.push(peek.right);
+                }
+            }
+            return root;
+        }
+
+        private TreeNode recursion(int[] preorder, int[] inorder) {
             int preLen = preorder.length;
             // 用 前序数组，构建 inorder 的 value 和 index 的映射
             inMap = new HashMap<>(preLen);
