@@ -60,7 +60,8 @@ public class KokoEatingBananas {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int minEatingSpeed(int[] piles, int h) {
-            // 根据用例的数据范围设定边界
+            // 因为可以吃一部分，留一部分下一次吃，则:
+            // 可以根据用例的数据范围设定边界
             int left = 0, right = (int) 1e9;
             while (left < right) {
                 int mid = left + (right - left) / 2;
