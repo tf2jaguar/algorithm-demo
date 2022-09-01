@@ -37,6 +37,14 @@ public class ListNodeTool {
         return dummy.next;
     }
 
+    public ListNode reverse2(ListNode head) {
+        if (head.next == null) return head;
+        ListNode last = reverse2(head.next);
+        head.next.next = head;
+        head.next = null;
+        return last;
+    }
+
     /**
      * 打印链表
      */
