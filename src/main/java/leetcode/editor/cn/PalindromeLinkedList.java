@@ -33,7 +33,7 @@
 
 package leetcode.editor.cn;
 
-import org.springframework.util.Assert;
+import com.sun.tools.javac.util.Assert;
 
 import java.util.Stack;
 
@@ -46,32 +46,32 @@ public class PalindromeLinkedList {
         Solution solution = new PalindromeLinkedList().new Solution();
 
         ListNode case1 = new ListNode(1);
-        Assert.isTrue(solution.isPalindrome(case1), "case1");
+        Assert.check(solution.isPalindrome(case1), "case1");
 
         ListNode case2 = new ListNode(1, new ListNode(1));
-        Assert.isTrue(solution.isPalindrome(case2), "case2");
+        Assert.check(solution.isPalindrome(case2), "case2");
 
         ListNode case3 = new ListNode(1, new ListNode(2));
-        Assert.isTrue(!solution.isPalindrome(case3), "case3");
+        Assert.check(!solution.isPalindrome(case3), "case3");
 
         ListNode case4 = new ListNode(1, new ListNode(2, new ListNode(1)));
-        Assert.isTrue(solution.isPalindrome(case4), "case4");
+        Assert.check(solution.isPalindrome(case4), "case4");
 
 
         ListNode case5 = new ListNode(1, new ListNode(2, new ListNode(3)));
-        Assert.isTrue(!solution.isPalindrome(case5), "case5");
+        Assert.check(!solution.isPalindrome(case5), "case5");
 
         ListNode case6 = new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(1))));
-        Assert.isTrue(solution.isPalindrome(case6), "case6");
+        Assert.check(solution.isPalindrome(case6), "case6");
 
         ListNode case7 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(2, new ListNode(1))))));
-        Assert.isTrue(solution.isPalindrome(case7), "case7");
+        Assert.check(solution.isPalindrome(case7), "case7");
 
         ListNode case8 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
-        Assert.isTrue(solution.isPalindrome(case8), "case8");
+        Assert.check(solution.isPalindrome(case8), "case8");
 
         ListNode case9 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(1, new ListNode(1)))));
-        Assert.isTrue(!solution.isPalindrome(case9), "case9");
+        Assert.check(!solution.isPalindrome(case9), "case9");
 
     }
     //leetcode submit region begin(Prohibit modification and deletion)
