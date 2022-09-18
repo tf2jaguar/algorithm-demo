@@ -1,10 +1,11 @@
-package zgd.base.org;
+package zgd.base.org.lru;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * 最近最少使用
+ * LinkedHashMap 重写 removeEldestEntry() 方法来实现
  *
  * @author zhangguodong
  * @date 2021/9/10 15:05
@@ -23,12 +24,4 @@ public class LRUCache<K, V> extends LinkedHashMap<K, V> {
         return size() > CACHE_SIZE;
     }
 
-    public static void main(String[] args) {
-        LRUCache<String, String> lru = new LRUCache<>(10);
-        for (int i = 0; i < 99; i++) {
-            lru.put("Key"+i, ""+i);
-        }
-
-        System.out.println(lru);
-    }
 }
