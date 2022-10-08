@@ -73,9 +73,16 @@ public class TreeNode {
         return head;
     }
 
+    public static int maxDept(TreeNode node, int dep) {
+        if (node == null) return dep;
+        return Math.max(maxDept(node.left, dep + 1), maxDept(node.right, dep + 1));
+    }
+
     public static void main(String[] args) {
         Integer[] list = new Integer[]{5, 4, 8, 11, null, 13, 4, 7, 2, null, null, 5, 1};
         TreeNode generate = TreeNode.generate(list);
         System.out.println(generate);
+
+        System.out.println(maxDept(generate,0));
     }
 }
