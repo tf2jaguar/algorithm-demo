@@ -8,7 +8,7 @@
 tempFilePath
 
 ```
-/Users/zhangguodong/IdeaProjects/github/algorithm-demo/src/main/java
+/Users/zhangguodong/Documents/idea/my-github/algorithm-demo/src/main/java
 ```
 
 **勾选 custom template**
@@ -16,7 +16,7 @@ tempFilePath
 code file name
 
 ```
-$!velocityTool.camelCaseName(${question.titleSlug})
+Q${question.frontendQuestionId}_$!velocityTool.camelCaseName(${question.titleSlug})
 ```
 
 codeTemplate
@@ -29,9 +29,9 @@ package leetcode.editor.cn;
  * title: ${question.frontendQuestionId} : ${question.title}
  * create: $!velocityTool.date()
  */
-public class $!velocityTool.camelCaseName(${question.titleSlug}){
+public class Q${question.frontendQuestionId}_$!velocityTool.camelCaseName(${question.titleSlug}){
     public static void main(String[] args){
-        Solution solution = new $!velocityTool.camelCaseName(${question.titleSlug})().new Solution();
+        Solution solution = new Q${question.frontendQuestionId}_$!velocityTool.camelCaseName(${question.titleSlug})().new Solution();
     }
     ${question.code}
 }
