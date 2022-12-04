@@ -46,6 +46,9 @@ import leetcode.editor.cn.warpper.TreeNode;
 public class Q98_ValidateBinarySearchTree {
     public static void main(String[] args) {
         Solution solution = new Q98_ValidateBinarySearchTree().new Solution();
+        TreeNode node = TreeNode.generate(new Integer[]{5, 4, 6, null, null, 3, 7});
+        boolean validBST = solution.isValidBST(node);
+        System.out.println(validBST);
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -74,18 +77,17 @@ public class Q98_ValidateBinarySearchTree {
         }
 
         public void middleOrder(TreeNode node) {
-            if (!res) {
+            if (!res || node == null) {
                 return;
             }
-            if (node != null) {
-                middleOrder(node.left);
-                if (preNum >= node.val) {
-                    res = false;
-                    return;
-                }
-                preNum = (long) node.val;
-                middleOrder(node.right);
+
+            middleOrder(node.left);
+            if (preNum >= node.val) {
+                res = false;
+                return;
             }
+            preNum = (long) node.val;
+            middleOrder(node.right);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
