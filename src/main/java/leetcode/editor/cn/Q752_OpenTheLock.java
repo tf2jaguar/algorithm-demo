@@ -67,46 +67,54 @@ public class Q752_OpenTheLock {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        // 双向 BFS 还是遵循 BFS 算法框架的，只是不再使⽤队列，⽽是使⽤ HashSet ⽅便快速判断两个集合是否有交集。
+        // 另外的⼀个技巧点就是 while 循环的最后交换 q1 和 q2 的内容，所以只要默认扩散 q1 就相当于轮流扩散 q1 和q2 。
+        // 双向 BFS 和单向 BFS 复杂度是一样的，重点掌握框架
         public int openLock(String[] deadends, String target) {
             // 记录需要跳过的 死亡密码 和 已经穷举过的密码
             Set<String> dead = new HashSet<>(Arrays.asList(deadends));
+            // 使用集合可以快速判断是否存在
             Set<String> visited = new HashSet<>();
-            Queue<String> queue = new LinkedList<>();
+            Set<String> q1 = new HashSet<>();
+            Set<String> q2 = new HashSet<>();
 
-            // 从起点开始广度搜索
             int step = 0;
-            queue.offer("0000");
-            visited.add("0000");
+            q1.add("0000");
+            q2.add(target);
 
-            while (!queue.isEmpty()) {
-                // 将当前队列(循环中会新加入，所以这里用当前size())中的每个密码的 每个位数向上下扩散
-                int size = queue.size();
-                for (int i = 0; i < size; i++) {
-                    String poll = queue.poll();
+            while (!q1.isEmpty() && !q2.isEmpty()) {
+                // 哈希集合在遍历过程中不能修改，用 temp 存储扩散结果
+                Set<String> temp = new HashSet<>();
 
-                    // 判断是否为 deadends 或者 是已经处理
-                    if (dead.contains(poll)) {
+                // 将 q1 中的节点向周围扩散
+                for (String s : q1) {
+                    if (dead.contains(s)) {
                         continue;
                     }
-                    if (poll.equals(target)) {
+                    if (q2.contains(s)) {
                         return step;
                     }
+                    // 这里加入已处理集合
+                    visited.add(s);
 
-                    // 当前密码（四位数）向上、下扩散
-                    for (int j = 0; j < 4; j++) {
-                        String up = plusOne(poll, j);
+                    // 将每个节点未遍历的相邻节点加入集合
+                    for (int i = 0; i < 4; i++) {
+                        String up = plusOne(s, i);
                         if (!visited.contains(up)) {
-                            queue.offer(up);
-                            visited.add(up);
+                            temp.add(up);
                         }
-                        String down = minusOne(poll, j);
+                        String down = minusOne(s, i);
                         if (!visited.contains(down)) {
-                            queue.offer(down);
-                            visited.add(down);
+                            temp.add(down);
                         }
                     }
                 }
                 step++;
+
+                // temp 相当于 q1
+                // 这里交换 q1 q2 下一轮 while 就是扩散 q2
+                q1 = q2;
+                q2 = temp;
             }
             return -1;
         }
